@@ -22,7 +22,6 @@
 
 @property (nonatomic, strong) AVCaptureVideoDataOutput *videoDataOutput;
 @property (nonatomic, strong) AVCaptureMetadataOutput *metadataOutput;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 
 @end
 
@@ -72,7 +71,6 @@
         _backInput = [AVCaptureDeviceInput deviceInputWithDevice:self.backDevice error:nil];
         _metadataOutput = [[AVCaptureMetadataOutput alloc] init];
         _session = [[AVCaptureSession alloc] init];
-        _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
         _videoDataOutput = [[AVCaptureVideoDataOutput alloc] init];
         for (AVCaptureDevice *device in [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo]) {
             if (device.position == AVCaptureDevicePositionFront) {
@@ -92,7 +90,6 @@
     [_session addOutput:self.metadataOutput];
     [_metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
     [_videoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-    [_previewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_metadataOutput setMetadataObjectTypes:@[
                                               AVMetadataObjectTypeQRCode,
                                               AVMetadataObjectTypeDataMatrixCode,
@@ -130,6 +127,15 @@
 }
 
 
+#pragma mark --- lazy
+
+- (AVCaptureVideoPreviewLayer *)previewLayer {
+    if (!_previewLayer) {
+        _previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
+        _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+    }
+    return _previewLayer;
+}
 
 #pragma mark --- General
 

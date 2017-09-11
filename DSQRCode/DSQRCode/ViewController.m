@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "DSScanQRCodeView.h"
 @interface ViewController ()
 
 @end
@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor clearColor];
+    DSScanQRCodeView *view = [[DSScanQRCodeView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:view];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

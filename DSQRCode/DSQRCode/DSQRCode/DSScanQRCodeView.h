@@ -10,4 +10,14 @@
 
 @interface DSScanQRCodeView : UIView
 
+@property (nonatomic, assign) CGRect  scanRect;
+
+@property (nonatomic, assign) CGFloat scanBorderLineWidth;
+
+@property (nonatomic, assign) CGFloat cornerWidth;
+
+@property (nonatomic, assign) CGFloat cornerLineWidth;
+
+@property (nonatomic, strong) UIColor *cornerColor;
+
 @end

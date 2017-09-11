@@ -16,4 +16,8 @@
 
 @property (nonatomic, copy) NSString *soundFileName;
 
+@property (nonatomic, assign) CGRect previewLayerRect;
+
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
+
 @end
