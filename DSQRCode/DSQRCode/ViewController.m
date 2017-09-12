@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 #import "DSScanQRCodeView.h"
-@interface ViewController ()
+@interface ViewController ()<DSQRCodeDelegate>
 
 @end
 
@@ -17,15 +17,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
-    DSScanQRCodeView *view = [[DSScanQRCodeView alloc] initWithFrame:self.view.bounds];
+    DSScanQRCodeView *view = [[DSScanQRCodeView alloc] initWithView:self.view];
+    view.delegate = self;
     [self.view addSubview:view];
-    // Do any additional setup after loading the view, typically from a nib.
+
 }
 
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)scanQRCodeResultMetadataObject:(NSArray *)metadatas {
+    NSLog(@"%@",metadatas);
 }
 
 

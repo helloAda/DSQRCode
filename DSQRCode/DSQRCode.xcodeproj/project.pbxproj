@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		774F369C1F67D94C0093506B /* ScanSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 774F369B1F67D94C0093506B /* ScanSound.mp3 */; };
 		77F23B2C1F63815500D12F3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B2B1F63815500D12F3A /* main.m */; };
 		77F23B2F1F63815500D12F3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B2E1F63815500D12F3A /* AppDelegate.m */; };
 		77F23B321F63815500D12F3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B311F63815500D12F3A /* ViewController.m */; };
@@ -15,7 +16,6 @@
 		77F23B3A1F63815500D12F3A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77F23B381F63815500D12F3A /* LaunchScreen.storyboard */; };
 		77F23B451F63815500D12F3A /* DSQRCodeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B441F63815500D12F3A /* DSQRCodeTests.m */; };
 		77F23B501F63815500D12F3A /* DSQRCodeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B4F1F63815500D12F3A /* DSQRCodeUITests.m */; };
-		77F23B611F63821100D12F3A /* DSQRCodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B601F63821100D12F3A /* DSQRCodeManager.m */; };
 		77F23B641F63E48700D12F3A /* DSScanQRCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B631F63E48700D12F3A /* DSScanQRCodeView.m */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		774F369B1F67D94C0093506B /* ScanSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ScanSound.mp3; sourceTree = "<group>"; };
 		77F23B271F63815500D12F3A /* DSQRCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSQRCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F23B2B1F63815500D12F3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		77F23B2D1F63815500D12F3A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -53,8 +54,6 @@
 		77F23B4B1F63815500D12F3A /* DSQRCodeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSQRCodeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F23B4F1F63815500D12F3A /* DSQRCodeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DSQRCodeUITests.m; sourceTree = "<group>"; };
 		77F23B511F63815500D12F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		77F23B5F1F63821100D12F3A /* DSQRCodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSQRCodeManager.h; sourceTree = "<group>"; };
-		77F23B601F63821100D12F3A /* DSQRCodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSQRCodeManager.m; sourceTree = "<group>"; };
 		77F23B621F63E48700D12F3A /* DSScanQRCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSScanQRCodeView.h; sourceTree = "<group>"; };
 		77F23B631F63E48700D12F3A /* DSScanQRCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSScanQRCodeView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,8 +150,6 @@
 		77F23B5D1F63819200D12F3A /* DSQRCode */ = {
 			isa = PBXGroup;
 			children = (
-				77F23B5F1F63821100D12F3A /* DSQRCodeManager.h */,
-				77F23B601F63821100D12F3A /* DSQRCodeManager.m */,
 				77F23B621F63E48700D12F3A /* DSScanQRCodeView.h */,
 				77F23B631F63E48700D12F3A /* DSScanQRCodeView.m */,
 			);
@@ -162,6 +159,7 @@
 		77F23B5E1F6381D800D12F3A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				774F369B1F67D94C0093506B /* ScanSound.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -233,6 +231,7 @@
 				TargetAttributes = {
 					77F23B261F63815500D12F3A = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = M3WM4WM6Y4;
 						ProvisioningStyle = Automatic;
 					};
 					77F23B3F1F63815500D12F3A = {
@@ -273,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				77F23B3A1F63815500D12F3A /* LaunchScreen.storyboard in Resources */,
+				774F369C1F67D94C0093506B /* ScanSound.mp3 in Resources */,
 				77F23B371F63815500D12F3A /* Assets.xcassets in Resources */,
 				77F23B351F63815500D12F3A /* Main.storyboard in Resources */,
 			);
@@ -299,7 +299,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77F23B611F63821100D12F3A /* DSQRCodeManager.m in Sources */,
 				77F23B321F63815500D12F3A /* ViewController.m in Sources */,
 				77F23B641F63E48700D12F3A /* DSScanQRCodeView.m in Sources */,
 				77F23B2F1F63815500D12F3A /* AppDelegate.m in Sources */,
@@ -454,6 +453,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M3WM4WM6Y4;
 				INFOPLIST_FILE = DSQRCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -466,6 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M3WM4WM6Y4;
 				INFOPLIST_FILE = DSQRCode/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -539,6 +540,7 @@
 				77F23B561F63815500D12F3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77F23B571F63815500D12F3A /* Build configuration list for PBXNativeTarget "DSQRCodeTests" */ = {
 			isa = XCConfigurationList;
@@ -547,6 +549,7 @@
 				77F23B591F63815500D12F3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77F23B5A1F63815500D12F3A /* Build configuration list for PBXNativeTarget "DSQRCodeUITests" */ = {
 			isa = XCConfigurationList;
@@ -555,6 +558,7 @@
 				77F23B5C1F63815500D12F3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
