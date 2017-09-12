@@ -18,6 +18,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
     DSScanQRCodeView *view = [[DSScanQRCodeView alloc] initWithView:self.view];
+    view.scanRect = CGRectMake(50, 200, 200, 200);
     view.delegate = self;
     [self.view addSubview:view];
 

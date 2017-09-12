@@ -44,6 +44,12 @@
 
 @property (nonatomic, weak) id<DSQRCodeDelegate> delegate;
 
+//扫描类型
+@property (nonatomic, strong) NSArray *metadataObjectTypes;
+
+//扫描范围
+@property (nonatomic, assign) CGRect scanRect;
+
 //扫描框线宽
 @property (nonatomic, assign) CGFloat scanBorderLineWidth;
 
@@ -67,4 +73,11 @@
 
 //扫描动画 线的高度
 @property (nonatomic, assign) CGFloat scanAnimationLineHeight;
+
+//是否播放声音
+@property (nonatomic, assign) BOOL isPlaySound;
+
+//提示文字
+@property (nonatomic, copy) NSString *tipText;
+
 @end

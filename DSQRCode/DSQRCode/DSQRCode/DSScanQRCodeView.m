@@ -23,11 +23,11 @@
 @property (nonatomic, strong) AVCaptureDevice *device;
 @property (nonatomic, strong) AVCaptureVideoDataOutput *videoDataOutput;
 
+@property (nonatomic, strong) UILabel *tipLabel;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) UIView *scanAnimationLine;
 @property (nonatomic, strong) UIButton *flashBtn;
 
-@property (nonatomic, strong) UIPinchGestureRecognizer *pinch;
 @end
 @implementation DSScanQRCodeView
 
@@ -51,10 +51,11 @@
     _cornerLineWidth = 4;
     _animateTime = 2;
     _soundName = @"ScanSound.mp3";
+    _scanAnimationLineHeight = 1;
     _cornerColor = [UIColor colorWithRed:85/255.0f green:183/255.0 blue:55/255.0 alpha:1.0];
     _scanAnimationLineColor = [UIColor colorWithRed:85/255.0f green:183/255.0 blue:55/255.0 alpha:1.0];
-    _scanAnimationLineHeight = 1;
-    
+    _isPlaySound = YES;
+    _tipText = @"将二维码/条码放入框内，即可自动扫描";
     if (self.frame.size.height > self.frame.size.width) {
         _scanW = self.frame.size.width * 0.7;
         _scanH = _scanW;
@@ -68,8 +69,6 @@
         _scanY = (self.frame.size.height - _scanH) / 2;
     }
     
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchAction)];
-    [self addGestureRecognizer:pinch];
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -86,10 +85,19 @@
     
     _flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_flashBtn setTitle:@"轻触照亮" forState:UIControlStateNormal];
+    [_flashBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
     _flashBtn.hidden = YES;
     [_flashBtn addTarget:self action:@selector(flashBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    _flashBtn.frame = CGRectMake((_scanW - 100) / 2 + _scanX, _scanY + _scanH - 50, 100, 30);
+    _flashBtn.frame = CGRectMake((_scanW - 50) / 2 + _scanX, _scanY + _scanH - 30, 50, 30);
     [self addSubview:_flashBtn];
+    
+    _tipLabel = [[UILabel alloc] init];
+    _tipLabel.text = _tipText;
+    _tipLabel.font = [UIFont systemFontOfSize:12];
+    _tipLabel.frame = CGRectMake(_scanX, _scanY + _scanH , _scanW, 30);
+    _tipLabel.textColor = [UIColor whiteColor];
+    _tipLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_tipLabel];
     
     //左上角
     UIBezierPath *pathLeft = [UIBezierPath bezierPath];
@@ -153,13 +161,14 @@
         [_session addOutput:_videoDataOutput];
     }
     
+    _metadataOutput.rectOfInterest = CGRectMake(_scanY / self.frame.size.height, _scanX / self.frame.size.width, _scanH / self.frame.size.height, _scanW / self.frame.size.width);
     _metadataOutput.metadataObjectTypes = @[AVMetadataObjectTypeEAN13Code,
                                     AVMetadataObjectTypeEAN8Code,
                                     AVMetadataObjectTypeCode128Code,
                                     AVMetadataObjectTypeQRCode];
     
     _previewLayer =[AVCaptureVideoPreviewLayer layerWithSession:_session];
-    _previewLayer.videoGravity =AVLayerVideoGravityResizeAspectFill;
+    _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     _previewLayer.frame = view.bounds;
     [view.layer insertSublayer:_previewLayer atIndex:0];
     
@@ -175,7 +184,9 @@
             [self.delegate scanQRCodeResultMetadataObject:metadataObjects];
         }
     }
-    [self playSound];
+    if (_isPlaySound) {
+        [self playSound];
+    }
 }
 
 
@@ -295,29 +306,57 @@ void soundPlayCallback(SystemSoundID ssID, void* __nullable clientData){
     }
 }
 
-- (void)pinchAction{
-    if (!_device) return;
-    CGFloat initZoom = 0.0;
-    if (_pinch.state == UIGestureRecognizerStateBegan) {
-        initZoom = _device.videoZoomFactor;
-    }
-    
-    NSError *error = nil;
-    [_device lockForConfiguration:&error];
-    
-    if (!error) {
-        CGFloat zoomFactor;
-        CGFloat scale = _pinch.scale;
-        if (scale < 1.0f) {
-            zoomFactor = initZoom - pow(_device.activeFormat.videoMaxZoomFactor, 1.0f - _pinch.scale);
-        }else {
-            zoomFactor = initZoom + pow(_device.activeFormat.videoMaxZoomFactor, (_pinch.scale - 1.0f) / 2.0f);
-        }
-        
-        zoomFactor = MIN(10.0f, zoomFactor);
-        zoomFactor = MAX(1.0f, zoomFactor);
-        _device.videoZoomFactor = zoomFactor;
-        [_device unlockForConfiguration];
-    }
+#pragma mark --  set
+
+- (void)setMetadataObjectTypes:(NSArray *)metadataObjectTypes {
+    _metadataOutput.metadataObjectTypes = metadataObjectTypes;
+}
+
+- (void)setScanRect:(CGRect)scanRect {
+    _scanX = scanRect.origin.x;
+    _scanY = scanRect.origin.y;
+    _scanW = scanRect.size.width;
+    _scanH = scanRect.size.height;
+//    _metadataOutput.rectOfInterest = CGRectMake(_scanY / self.frame.size.height, _scanX / self.frame.size.width, _scanH / self.frame.size.height, _scanW / self.frame.size.width);
+}
+
+- (void)setScanBorderLineWidth:(CGFloat)scanBorderLineWidth {
+    _scanBorderLineWidth = scanBorderLineWidth;
+}
+
+- (void)setCornerWidth:(CGFloat)cornerWidth  {
+    _cornerWidth = cornerWidth;
+}
+
+- (void)setCornerColor:(UIColor *)cornerColor {
+    _cornerColor = cornerColor;
+}
+
+- (void)setCornerLineWidth:(CGFloat)cornerLineWidth {
+    _cornerLineWidth = cornerLineWidth;
+}
+
+- (void)setAnimateTime:(NSTimeInterval)animateTime {
+    _animateTime = animateTime;
+}
+
+- (void)setSoundName:(NSString *)soundName {
+    _soundName = soundName;
+}
+
+- (void)setScanAnimationLineColor:(UIColor *)scanAnimationLineColor {
+    _scanAnimationLineColor = scanAnimationLineColor;
+}
+
+- (void)setScanAnimationLineHeight:(CGFloat)scanAnimationLineHeight {
+    _scanAnimationLineHeight = scanAnimationLineHeight;
+}
+
+- (void)setIsPlaySound:(BOOL)isPlaySound {
+    _isPlaySound = isPlaySound;
+}
+
+- (void)setTipText:(NSString *)tipText {
+    _tipText = tipText;
 }
 @end
