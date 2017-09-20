@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		774F369C1F67D94C0093506B /* ScanSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 774F369B1F67D94C0093506B /* ScanSound.mp3 */; };
+		77DAB5E41F720A2B0041377E /* DSQRCodeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DAB5E31F720A2B0041377E /* DSQRCodeManager.m */; };
+		77DAB5E71F72566A0041377E /* DSQRCodeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DAB5E61F72566A0041377E /* DSQRCodeHelper.m */; };
 		77F23B2C1F63815500D12F3A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B2B1F63815500D12F3A /* main.m */; };
 		77F23B2F1F63815500D12F3A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B2E1F63815500D12F3A /* AppDelegate.m */; };
 		77F23B321F63815500D12F3A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F23B311F63815500D12F3A /* ViewController.m */; };
@@ -38,6 +40,10 @@
 
 /* Begin PBXFileReference section */
 		774F369B1F67D94C0093506B /* ScanSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ScanSound.mp3; sourceTree = "<group>"; };
+		77DAB5E21F720A2B0041377E /* DSQRCodeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSQRCodeManager.h; sourceTree = "<group>"; };
+		77DAB5E31F720A2B0041377E /* DSQRCodeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSQRCodeManager.m; sourceTree = "<group>"; };
+		77DAB5E51F72566A0041377E /* DSQRCodeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSQRCodeHelper.h; sourceTree = "<group>"; };
+		77DAB5E61F72566A0041377E /* DSQRCodeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSQRCodeHelper.m; sourceTree = "<group>"; };
 		77F23B271F63815500D12F3A /* DSQRCode.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSQRCode.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77F23B2B1F63815500D12F3A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		77F23B2D1F63815500D12F3A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -152,6 +158,10 @@
 			children = (
 				77F23B621F63E48700D12F3A /* DSScanQRCodeView.h */,
 				77F23B631F63E48700D12F3A /* DSScanQRCodeView.m */,
+				77DAB5E21F720A2B0041377E /* DSQRCodeManager.h */,
+				77DAB5E31F720A2B0041377E /* DSQRCodeManager.m */,
+				77DAB5E51F72566A0041377E /* DSQRCodeHelper.h */,
+				77DAB5E61F72566A0041377E /* DSQRCodeHelper.m */,
 			);
 			path = DSQRCode;
 			sourceTree = "<group>";
@@ -299,10 +309,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77DAB5E71F72566A0041377E /* DSQRCodeHelper.m in Sources */,
 				77F23B321F63815500D12F3A /* ViewController.m in Sources */,
 				77F23B641F63E48700D12F3A /* DSScanQRCodeView.m in Sources */,
 				77F23B2F1F63815500D12F3A /* AppDelegate.m in Sources */,
 				77F23B2C1F63815500D12F3A /* main.m in Sources */,
+				77DAB5E41F720A2B0041377E /* DSQRCodeManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

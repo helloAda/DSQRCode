@@ -7,9 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "DSScanQRCodeView.h"
+#import "DSQRCodeManager.h"
 @interface ViewController ()<DSQRCodeDelegate>
 
+@property (nonatomic, strong) DSQRCodeManager *manager;
 @end
 
 @implementation ViewController
@@ -17,16 +18,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor clearColor];
-    DSScanQRCodeView *view = [[DSScanQRCodeView alloc] initWithView:self.view];
-    view.scanRect = CGRectMake(50, 200, 200, 200);
-    view.delegate = self;
-    [self.view addSubview:view];
-
 }
 
+- (DSQRCodeManager *)manager {
+    if (!_manager) {
+        _manager = [[DSQRCodeManager alloc] initWithScanViewRect:CGRectZero showView:self.view];
+        _manager.delegate = self;
+        [_manager startRunning];
+    }
+    return _manager;
+}
 
 - (void)scanQRCodeResultMetadataObject:(NSArray *)metadatas {
     NSLog(@"%@",metadatas);
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self.manager.scanView stopTimer];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.manager.scanView startTimer];
 }
 
 

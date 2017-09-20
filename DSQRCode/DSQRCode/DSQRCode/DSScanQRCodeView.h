@@ -10,45 +10,16 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 
-@protocol DSQRCodeDelegate <NSObject>
-
-@required
-/**
- 扫描二维码数据回调
- 
- @param metadatas 扫描结果
- */
-- (void)scanQRCodeResultMetadataObject:(NSArray *)metadatas;
-
-@optional
-
-- (void)scanQRCodeLightValue:(CGFloat)lightValue;
-
-@end
-
-
-
 
 @interface DSScanQRCodeView : UIView
 
-- (instancetype)initWithView:(UIView *)view;
+- (instancetype)initWithScanViewRect:(CGRect)rect showView:(UIView *)view;
 
-//播放声音
-- (void)playSound;
+// 添加定时器
+- (void)startTimer;
 
-//停止画面
-- (void)stopRunning;
-
-//开启画面
-- (void)startRunning;
-
-@property (nonatomic, weak) id<DSQRCodeDelegate> delegate;
-
-//扫描类型
-@property (nonatomic, strong) NSArray *metadataObjectTypes;
-
-//扫描范围
-@property (nonatomic, assign) CGRect scanRect;
+// 停止定时器(记得销毁)
+- (void)stopTimer;
 
 //扫描框线宽
 @property (nonatomic, assign) CGFloat scanBorderLineWidth;
@@ -65,19 +36,17 @@
 //扫描线动画时间 默认2s
 @property (nonatomic, assign) NSTimeInterval animateTime;
 
-//音频文件名称
-@property (nonatomic, copy) NSString *soundName;
-
 //扫描动画 线的颜色
 @property (nonatomic, strong) UIColor *scanAnimationLineColor;
 
 //扫描动画 线的高度
 @property (nonatomic, assign) CGFloat scanAnimationLineHeight;
 
-//是否播放声音
-@property (nonatomic, assign) BOOL isPlaySound;
-
 //提示文字
 @property (nonatomic, copy) NSString *tipText;
+
+
+// 亮度足够时隐藏闪光灯(提供给DSQRCodeManager内使用，一般你不应该调用这个方法)
+- (void)setFlashButtonHidden:(BOOL)hidden;
 
 @end
