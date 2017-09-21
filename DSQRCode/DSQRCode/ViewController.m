@@ -7,39 +7,38 @@
 //
 
 #import "ViewController.h"
-#import "DSQRCodeManager.h"
-@interface ViewController ()<DSQRCodeDelegate>
-
-@property (nonatomic, strong) DSQRCodeManager *manager;
+#import "ScanViewController.h"
+@interface ViewController ()
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor clearColor];
-}
-
-- (DSQRCodeManager *)manager {
-    if (!_manager) {
-        _manager = [[DSQRCodeManager alloc] initWithScanViewRect:CGRectZero showView:self.view];
-        _manager.delegate = self;
-        [_manager startRunning];
-    }
-    return _manager;
-}
-
-- (void)scanQRCodeResultMetadataObject:(NSArray *)metadatas {
-    NSLog(@"%@",metadatas);
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [self.manager.scanView stopTimer];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self.manager.scanView startTimer];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIButton *scan = [[UIButton alloc] initWithFrame:CGRectMake(125, 300, 100, 30)];
+    [scan setTitle:@"扫描" forState:UIControlStateNormal];
+    [scan setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [scan addTarget:self action:@selector(scan) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:scan];
+    
+    UIButton *photo = [[UIButton alloc] initWithFrame:CGRectMake(125, 400, 100, 30)];
+    [photo setTitle:@"相册" forState:UIControlStateNormal];
+    [photo setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [photo addTarget:self action:@selector(photo) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:photo];
 }
 
 
+- (void)scan {
+    
+    ScanViewController *vc = [[ScanViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+- (void)photo {
+    NSLog(@"由于最近较忙，相册暂时没有开始。");
+}
 @end

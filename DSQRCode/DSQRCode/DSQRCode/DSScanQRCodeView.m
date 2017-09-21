@@ -26,6 +26,7 @@
     if (self) {
         _scanRect = rect;
         [self setting];
+        [view addSubview:self];
     }
     
     return self;
@@ -48,6 +49,16 @@
 
 - (void)drawRect:(CGRect)rect {
     
+
+    
+    //画扫描框
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetRGBFillColor(context, 0, 0, 0, 0.6);
+    CGContextFillRect(context, rect);
+    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+    CGContextStrokeRectWithWidth(context, _scanRect,_scanBorderLineWidth);
+    CGContextClearRect(context, _scanRect);
+    
     _flashBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [_flashBtn setTitle:@"轻触照亮" forState:UIControlStateNormal];
     [_flashBtn.titleLabel setFont:[UIFont systemFontOfSize:12]];
@@ -63,14 +74,6 @@
     _tipLabel.textColor = [UIColor whiteColor];
     _tipLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_tipLabel];
-    
-    //画扫描框
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBFillColor(context, 0, 0, 0, 0.6);
-    CGContextFillRect(context, rect);
-    CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
-    CGContextStrokeRectWithWidth(context, _scanRect,_scanBorderLineWidth);
-    CGContextClearRect(context, _scanRect);
     
     CGFloat interval = (_cornerLineWidth - _scanBorderLineWidth) / 2;
     
@@ -118,6 +121,7 @@
 #pragma mark ----  timer - animation
 
 - (void)startTimer {
+    self.scanAnimationLine.hidden = NO;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:_animateTime target:self selector:@selector(scanLineAnimation) userInfo:nil repeats:YES];
 }
 
@@ -143,8 +147,7 @@
 - (void)stopTimer {
     [self.timer invalidate];
     self.timer = nil;
-    [self.scanAnimationLine removeFromSuperview];
-    self.scanAnimationLine = nil;
+    self.scanAnimationLine.hidden = YES;
 }
 
 
@@ -190,6 +193,7 @@
 
 - (void)setScanAnimationLineColor:(UIColor *)scanAnimationLineColor {
     _scanAnimationLineColor = scanAnimationLineColor;
+    _scanAnimationLine.backgroundColor = _scanAnimationLineColor;
 }
 
 - (void)setScanAnimationLineHeight:(CGFloat)scanAnimationLineHeight {
@@ -198,5 +202,6 @@
 
 - (void)setTipText:(NSString *)tipText {
     _tipText = tipText;
+    _tipLabel.text = _tipText;
 }
 @end

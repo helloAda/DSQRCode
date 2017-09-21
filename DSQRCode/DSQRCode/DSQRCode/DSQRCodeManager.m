@@ -45,8 +45,9 @@
             _scanRect = rect;
         }
         
-       _scanView = [[DSScanQRCodeView alloc] initWithScanViewRect:_scanRect showView:view];
         [self setupAVCaptureWithView:view];
+        _scanView = [[DSScanQRCodeView alloc] initWithScanViewRect:_scanRect showView:view];
+
     }
     return self;
 }
@@ -55,7 +56,7 @@
 - (void)setupAVCaptureWithView:(UIView *)view {
     _soundName = @"ScanSound.mp3";
     _isPlaySound = YES;
-
+    _scanContinue = NO;
     _device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     _input = [AVCaptureDeviceInput deviceInputWithDevice:_device error:nil];
     
@@ -90,6 +91,7 @@
 }
 
 - (BOOL)isAvailable {
+    if(![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) return NO;
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     if(authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"温馨提示" message:@"没有权限访问相机，请在设置-隐私-相机中打开" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -105,13 +107,23 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
     //设置界面显示扫描结果
-    if (metadataObjects.count > 0) {
-        if ([self.delegate respondsToSelector:@selector(scanQRCodeResultMetadataObject:)]) {
-            [self.delegate scanQRCodeResultMetadataObject:metadataObjects];
+    if (metadataObjects.count > 0 && metadataObjects) {
+        //播放声音
+        if (_isPlaySound) {
+            [self playSound];
         }
-    }
-    if (_isPlaySound) {
-        [self playSound];
+        if (!_scanContinue) {
+            if ([self.delegate respondsToSelector:@selector(scanQRCodeResultMetadataObject:)]) {
+                [self stopRunning];
+                [self.delegate scanQRCodeResultMetadataObject:metadataObjects];
+            }
+        }else {
+            //连续扫码 stop由自己控制
+            if ([self.delegate respondsToSelector:@selector(scanQRCodeResultMetadataObject:)]) {
+                [self.delegate scanQRCodeResultMetadataObject:metadataObjects];
+            }
+        }
+
     }
 }
 
@@ -147,11 +159,9 @@
     [_session stopRunning];
 }
 
-- (void)videoPreviewLayerRemoveFromSuperlayer {
-    [_previewLayer removeFromSuperlayer];
-
+- (void)setFullScan {
+   _metadataOutput.rectOfInterest = CGRectMake(0, 0, 1, 1);
 }
-
 
 - (void)playSound {
     NSString *filePath = [[NSBundle mainBundle] pathForResource:_soundName ofType:nil];
@@ -184,4 +194,5 @@ void soundPlayCallback(SystemSoundID ssID, void* __nullable clientData){
 - (void)setIsPlaySound:(BOOL)isPlaySound {
     _isPlaySound = isPlaySound;
 }
+
 @end

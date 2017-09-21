@@ -21,10 +21,6 @@
  */
 - (void)scanQRCodeResultMetadataObject:(NSArray *)metadatas;
 
-@optional
-
-- (void)scanQRCodeLightValue:(CGFloat)lightValue;
-
 @end
 
 
@@ -45,8 +41,8 @@
 // 停止会话扫描
 - (void)stopRunning;
 
-// 移除 videoPreviewLayer 对象
-- (void)videoPreviewLayerRemoveFromSuperlayer;
+//是否全屏幕扫描
+- (void)setFullScan;
 
 //代理
 @property (nonatomic, weak) id<DSQRCodeDelegate> delegate;
@@ -63,7 +59,10 @@
 //音频文件名称
 @property (nonatomic, copy) NSString *soundName;
 
-//是否播放声音
+//是否播放声音 默认YES
 @property (nonatomic, assign) BOOL isPlaySound;
+
+//是否连续扫描 默认NO
+@property (nonatomic, assign) BOOL scanContinue;
 
 @end
